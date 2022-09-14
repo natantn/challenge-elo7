@@ -31,8 +31,6 @@ public class ExplorerController {
 
     @Autowired
     private ExplorerRespository explorerRespository;
-    @Autowired
-    private PlanetRepository planetRepository;
 
     @Autowired
     private ExplorerService explorerService;
