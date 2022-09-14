@@ -1,6 +1,8 @@
 package br.com.elo.challenge.planetexplorer.models;
 
 import br.com.elo.challenge.planetexplorer.dtos.output.ExplorerInDetails;
+import br.com.elo.challenge.planetexplorer.dtos.output.ExplorerItem;
+import br.com.elo.challenge.planetexplorer.dtos.output.PlanetItem;
 import br.com.elo.challenge.planetexplorer.enums.Direction;
 import br.com.elo.challenge.planetexplorer.enums.ExplorerStatus;
 import br.com.elo.challenge.planetexplorer.enums.Side;
@@ -11,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 @Document(collection = "explorers")
-public class Explorer {
+public class Explorer extends SpaceRegister{
 
     @Id
     private String id;
@@ -20,7 +22,7 @@ public class Explorer {
     private String slug;
     private int posX = -1;
     private int posY = -1;
-//    private Planet planet;
+    private PlanetItem planet;
     private Direction orientation;
     private ExplorerStatus status;
 
@@ -53,6 +55,10 @@ public class Explorer {
         return posY;
     }
 
+    public PlanetItem getPlanet() {
+        return planet;
+    }
+
     public Direction getOrientation() {
         return orientation;
     }
@@ -66,10 +72,11 @@ public class Explorer {
                 + LocalDate.now().toString().replaceAll("-", "");
     }
 
-    public void LandAt(int X, int Y, Direction orientation){
+    public void LandAt(PlanetItem planet, int X, int Y, Direction orientation){
         this.posX = X;
         this.posY = Y;
         this.orientation = orientation;
+        this.planet = planet;
         this.status = ExplorerStatus.ON_PLANET;
     }
 
@@ -118,7 +125,17 @@ public class Explorer {
         }
     }
 
+    public String getExplorerMapCoordenates() {
+        return this.posX + "x" + this.posY;
+    }
+
     public ExplorerInDetails showExplorerInDetails() {
         return new ExplorerInDetails(this);
     }
+
+    public ExplorerItem getExplorerAsRegisterItem() {
+        return new ExplorerItem(this);
+    }
+
+
 }

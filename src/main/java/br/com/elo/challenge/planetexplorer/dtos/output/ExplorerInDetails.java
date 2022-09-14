@@ -3,16 +3,19 @@ package br.com.elo.challenge.planetexplorer.dtos.output;
 import br.com.elo.challenge.planetexplorer.enums.Direction;
 import br.com.elo.challenge.planetexplorer.enums.ExplorerStatus;
 import br.com.elo.challenge.planetexplorer.models.Explorer;
+import br.com.elo.challenge.planetexplorer.models.Planet;
+import br.com.elo.challenge.planetexplorer.models.SpaceRegister;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ExplorerInDetails {
+public class ExplorerInDetails extends SpaceRegister {
 
     private String name;
     private String slug;
     private int posX;
     private int posY;
+    private PlanetItem actualPlanet;
     private Direction orientation;
     private ExplorerStatus status;
 
@@ -25,6 +28,7 @@ public class ExplorerInDetails {
         this.posX = explorer.getPosX();
         this.posY = explorer.getPosY();
         this.orientation = explorer.getOrientation();
+        this.actualPlanet = explorer.getPlanet();
         this.status = explorer.getStatus();
 
     }
@@ -79,6 +83,14 @@ public class ExplorerInDetails {
 
     public void setStatus(ExplorerStatus status) {
         this.status = status;
+    }
+
+    public PlanetItem getActualPlanet() {
+        return actualPlanet;
+    }
+
+    public void setActualPlanet(PlanetItem actualPlanet) {
+        this.actualPlanet = actualPlanet;
     }
 }
 

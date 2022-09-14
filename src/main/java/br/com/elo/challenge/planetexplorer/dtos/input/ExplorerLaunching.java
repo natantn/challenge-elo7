@@ -1,11 +1,28 @@
 package br.com.elo.challenge.planetexplorer.dtos.input;
 
 import br.com.elo.challenge.planetexplorer.enums.Direction;
+import br.com.elo.challenge.planetexplorer.models.Planet;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 
 public class ExplorerLaunching {
 
+    @NotNull
+    @NotEmpty
+    private String planetSlug;
+    @NotNull
+    @NotEmpty
+    @Positive
     private int posX;
+    @Positive
+    @NotNull
+    @NotEmpty
     private int posY;
+    @NotNull
+    @NotEmpty
     private Direction orientation;
 
     public ExplorerLaunching() {
@@ -39,5 +56,13 @@ public class ExplorerLaunching {
 
     public void setOrientation(Direction orientation) {
         this.orientation = orientation;
+    }
+
+    public String getPlanetSlug() {
+        return planetSlug;
+    }
+
+    public void setPlanetSlug(String planetSlug) {
+        this.planetSlug = planetSlug;
     }
 }
