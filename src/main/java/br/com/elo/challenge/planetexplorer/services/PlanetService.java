@@ -1,5 +1,6 @@
 package br.com.elo.challenge.planetexplorer.services;
 
+import br.com.elo.challenge.planetexplorer.dtos.output.ExplorerItem;
 import br.com.elo.challenge.planetexplorer.dtos.output.PlanetInDetails;
 import br.com.elo.challenge.planetexplorer.dtos.output.RegisterWithMessage;
 import br.com.elo.challenge.planetexplorer.models.Planet;
@@ -39,5 +40,29 @@ public class PlanetService {
         }
 
         return true;
+    }
+
+    public boolean isPositionInPlanet(Planet planet, String axis, int pos) {
+        if (pos <= 0) return false;
+
+        if (
+                (axis.equals("X") && pos <= planet.getLimitX()) ||
+                (axis.equals("Y") && pos <= planet.getLimitY())
+            ) return true;
+
+        return false;
+    }
+
+    public boolean isPositionFree(Planet planet, String position) {
+        for (ExplorerItem probe : planet.getProbesAtPlanet()) {
+            if (probe.getCoordenates().equals(position)) return false;
+        }
+        return true;
+    }
+
+
+    public void saveProbe(Planet planet, ExplorerItem probe) {
+        planet.saveExplorer(probe);
+        savePlanet(planet);
     }
 }

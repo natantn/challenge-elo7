@@ -63,6 +63,15 @@ public class Planet extends SpaceRegister {
         this.probesExploringPlanet.add(explorer);
     }
 
+    public void saveExplorer(ExplorerItem explorerItem) {
+        for (ExplorerItem e : probesExploringPlanet) {
+            if (e.getSlug().equals(explorerItem.getSlug())) {
+                this.probesExploringPlanet.remove(e);
+                this.probesExploringPlanet.add(explorerItem);
+            }
+        }
+    }
+
     public boolean hasAnExplorerAtXY(int x, int y){
         for (ExplorerItem e: probesExploringPlanet) {
             String[] coordenates = e.getCoordenates().split("x");
