@@ -86,19 +86,44 @@ public class ExplorerService {
     public void moveExplorer(Explorer probe, String movement) {
         String[] movementSequence = movement.split("");
         for (String command: movementSequence) {
-            switch (command){
-                case "M":
-                    probe.Move();
-                    break;
-                case "L":
-                    probe.Turn(Side.Left);
-                    break;
-                case "R":
-                    probe.Turn(Side.Right);
-                    break;
-                default:
-                    break;
+            if (command.equals("M")) moveExplorerForward(probe);
+            else if (command.equals("L") || command.equals("R")) {
+                if (command.equals("L")) probe.Turn(Side.Left);
+                else probe.Turn(Side.Right);
+                planetService.saveProbe(planetService.getPlanetBySlug(probe.getPlanet().getSlug()), probe.getExplorerAsRegisterItem());
             }
         }
+    }
+
+    private void moveExplorerForward(Explorer probe){
+        String axis = getMovementAxisByDirection(probe.getOrientation());
+        int actualPos = axis.equals("X") ? probe.getPosX() : probe.getPosY();
+        int newPos = getMovementUnitByDirection(probe.getOrientation()) + actualPos;
+
+        Planet planet = planetService.getPlanetBySlug(probe.getPlanet().getSlug());
+
+        if (!planetService.isPositionInPlanet(planet, axis, newPos)) return;
+
+        String position;
+        if (axis.equals("X")) {
+            position = newPos + "x" + probe.getPosY();
+        } else {
+            position = probe.getPosX() + "x" + newPos;
+        }
+
+        if (!planetService.isPositionFree(planet,position)) return;
+
+        probe.Move(newPos, axis);
+        planetService.saveProbe(planet, probe.getExplorerAsRegisterItem());
+    }
+
+    private int getMovementUnitByDirection(Direction dir) {
+        if (dir == Direction.North || dir == Direction.East) return 1;
+        return -1;
+    }
+
+    private String getMovementAxisByDirection(Direction dir) {
+        if (dir == Direction.North || dir == Direction.South) return "Y";
+        return "X";
     }
 }

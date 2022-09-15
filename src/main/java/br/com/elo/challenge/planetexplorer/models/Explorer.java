@@ -84,24 +84,27 @@ public class Explorer extends SpaceRegister{
      *
      * @return
      */
-    public boolean Move(){
-        switch (this.orientation) {
-            case North: //Plus 1 in Y
-                this.posY++;
-                break;
-            case South: //Less 1 in Y
-                this.posY--;
-                break;
-            case East: //Plus 1 in X
-                this.posX++;
-                break;
-            case West: //Less 1 in X
-                this.posX--;
-                break;
-            default:
-                return false;
-        }
-        return true;
+    public void Move(int unit, String dir){
+        if (dir.equals("X")) this.posX = unit;
+        else if (dir.equals("Y")) this.posY = unit;
+
+//        switch (this.orientation) {
+//            case North: //Plus 1 in Y
+//                this.posY++;
+//                break;
+//            case South: //Less 1 in Y
+//                this.posY--;
+//                break;
+//            case East: //Plus 1 in X
+//                this.posX++;
+//                break;
+//            case West: //Less 1 in X
+//                this.posX--;
+//                break;
+//            default:
+//                return false;
+//        }
+//        return true;
     }
 
     /***
