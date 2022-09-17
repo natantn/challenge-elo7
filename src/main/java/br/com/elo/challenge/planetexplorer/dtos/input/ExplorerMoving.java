@@ -1,8 +1,14 @@
 package br.com.elo.challenge.planetexplorer.dtos.input;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ExplorerMoving {
 
+    @NotEmpty
+    @NotNull
     String movement;
+
 
     public ExplorerMoving() {
     }
