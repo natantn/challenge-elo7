@@ -26,6 +26,12 @@ public class PlanetToRegister {
     public PlanetToRegister() {
     }
 
+    public PlanetToRegister(String name, int limitX, int limitY) {
+        this.name = name;
+        this.limitX = limitX;
+        this.limitY = limitY;
+    }
+
     public String getName() {
         return name;
     }
